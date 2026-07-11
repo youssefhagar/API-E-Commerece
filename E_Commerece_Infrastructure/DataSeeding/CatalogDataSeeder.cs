@@ -28,7 +28,7 @@ namespace E_Commerce_Infrastructure.DataSeeding
                     logger.LogInformation("No pending migrations found.");
                 }
 
-                var rootPath = Path.Combine(AppContext.BaseDirectory, "SeedData");
+                var rootPath = Path.Combine(AppContext.BaseDirectory, "DataSeed");
 
                 await SeedIfEmptyAsync<ProductBrand, int>(rootPath, "brands.json", cancellationToken);
                 await SeedIfEmptyAsync<ProductType, int>(rootPath, "types.json", cancellationToken);
@@ -48,8 +48,7 @@ namespace E_Commerce_Infrastructure.DataSeeding
 
         }
 
-        private async Task SeedIfEmptyAsync<TEntity, TKey>(string rootPath, string fileName, CancellationToken ct = default)
-            where TEntity : BaseEntity<TKey>
+        private async Task SeedIfEmptyAsync<TEntity, TKey>(string rootPath, string fileName, CancellationToken ct = default) where TEntity : BaseEntity<TKey>
         {
 
             if (await dbContext.Set<TEntity>().AnyAsync(ct))
@@ -61,6 +60,9 @@ namespace E_Commerce_Infrastructure.DataSeeding
             }
 
             var filePath = Path.Combine(rootPath, fileName);
+            //logger.LogInformation("Root Path: {Root}", rootPath);
+            //logger.LogInformation("File Path: {File}", filePath);
+            //logger.LogInformation("Exists: {Exists}", File.Exists(filePath));
 
             if (!File.Exists(filePath))
             {

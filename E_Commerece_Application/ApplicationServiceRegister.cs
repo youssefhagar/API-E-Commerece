@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using E_Commerece.Application.Contracts;
+using E_Commerece.Application.Service;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace E_Commerece.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddAutoMapper(X=> { },typeof(ApplicationServiceRegister).Assembly);
+            services.AddScoped<IProductService, ProductService>();
             return services;
         }
 
