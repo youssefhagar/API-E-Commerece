@@ -14,7 +14,9 @@ namespace E_Commerece.Domain.Contract
         void Delete(TEntity entity);
 
         Task<IReadOnlyList<TEntity>?> GetAllAsync(CancellationToken ct);
+        Task<IReadOnlyList<TEntity>?> GetAllAsync(ISpecification<TEntity, TKey> spec, CancellationToken ct);
         Task<TEntity?> GetByIdASync(int id,CancellationToken ct);
+        Task<TEntity?> GetByIdASync(ISpecification<TEntity, TKey> spec, CancellationToken ct);
 
 
     }

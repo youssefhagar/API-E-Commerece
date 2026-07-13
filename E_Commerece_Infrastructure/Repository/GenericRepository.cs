@@ -21,10 +21,26 @@ namespace E_Commerece.Infrastructure.Repository
         public async Task<IReadOnlyList<TEntity>?> GetAllAsync(CancellationToken ct = default!)
             => await context.Set<TEntity>().ToListAsync(ct);
 
+      
+
         public async Task<TEntity?> GetByIdASync(int id, CancellationToken ct = default!)
             => await context.Set<TEntity>().FindAsync(id, ct);
 
         public void Update(TEntity entity)
            => context.Set<TEntity>().Update(entity);
+
+
+
+        public async Task<IReadOnlyList<TEntity>?> GetAllAsync(ISpecification<TEntity, TKey> spec, CancellationToken ct)
+        {
+            var query = SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), spec);
+            return await query.ToListAsync(ct);
+        }
+
+        public  Task<TEntity?> GetByIdASync(ISpecification<TEntity, TKey> spec, CancellationToken ct)
+        {
+            var query = SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), spec);
+            return query.FirstOrDefaultAsync(ct);
+        }
     }
 }

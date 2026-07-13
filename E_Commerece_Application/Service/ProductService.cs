@@ -2,6 +2,8 @@
 using E_Commerece.Application.Common;
 using E_Commerece.Application.Contracts;
 using E_Commerece.Application.Dtos;
+using E_Commerece.Application.Params;
+using E_Commerece.Application.Specifications;
 using E_Commerece.Domain.Contract;
 using E_Commerece.Domain.Entites.Products;
 using E_Commerece.Infrastructure.Dtos;
@@ -32,9 +34,10 @@ namespace E_Commerece.Application.Service
             return Result<IReadOnlyList<BrandDto>>.Ok(mappedBrands);
         }
 
-        public async Task<Result<IReadOnlyList<ProductDto>>> GetAllProductsAsync(CancellationToken ct = default)
+        public async Task<Result<IReadOnlyList<ProductDto>>> GetAllProductsAsync(ProductQueryParams param, CancellationToken ct = default)
         {
-            var products = await _unitOfWork.GetRepository<Product,int>().GetAllAsync(ct);
+            var spec = new ProductSpecififcation(param);
+            var products = await _unitOfWork.GetRepository<Product,int>().GetAllAsync(spec,ct);
             return Result<IReadOnlyList<ProductDto>>.Ok(mapper.Map<IReadOnlyList<ProductDto>>(products));
         }
 
@@ -46,7 +49,8 @@ namespace E_Commerece.Application.Service
 
         public async Task<Result<ProductDto>> GetProductByIdAsync(int productId, CancellationToken ct = default)
         {
-            var product = await _unitOfWork.GetRepository<Product,int>().GetByIdASync(productId, ct);
+            var spec = new ProductSpecififcation(productId);
+            var product = await _unitOfWork.GetRepository<Product,int>().GetByIdASync(spec, ct);
             if (product == null)
                 return Result<ProductDto>.Fail(Error.NotFound("ProductNotFound", $"Product with id {productId} not found."));
 
