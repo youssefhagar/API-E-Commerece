@@ -42,5 +42,11 @@ namespace E_Commerece.Infrastructure.Repository
             var query = SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), spec);
             return query.FirstOrDefaultAsync(ct);
         }
+
+        public async Task<int> GetProductsCountAsync(ISpecification<TEntity, TKey> spec, CancellationToken ct)
+        {
+            var query = SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), spec);
+            return await query.CountAsync(ct);
+        }
     }
 }
