@@ -18,12 +18,13 @@ namespace E_Commerece.Infrastructure.Repository
             database = connection.GetDatabase();
         }
 
-        public async Task<CustomerBasket> CreateOrUpdateBasketAsync(CustomerBasket basket, TimeSpan? timeToLive = null, CancellationToken ct)
+        public async Task<CustomerBasket> CreateOrUpdateBasketAsync(CustomerBasket basket, TimeSpan? timeToLive = null, CancellationToken ct = default!)
         {
            var json = JsonSerializer.Serialize(basket);
            var success = await database.StringSetAsync(basket.Id, json, timeToLive ?? TimeSpan.FromDays(30));
             return success ? basket : null;
         }
+
 
         public async Task<bool> DeleteBasketAsync(string basketId)
         {

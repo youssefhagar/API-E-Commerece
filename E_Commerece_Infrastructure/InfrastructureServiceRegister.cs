@@ -29,7 +29,7 @@ namespace E_Commerece.Infrastructure
             services.AddSingleton<IConnectionMultiplexer>(options =>
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));
-            })
+            });
 
 
             return services;
