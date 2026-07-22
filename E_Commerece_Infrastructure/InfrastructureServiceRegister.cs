@@ -30,7 +30,7 @@ namespace E_Commerece.Infrastructure
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));
             });
-
+            services.AddSingleton<ICachRepository, CachRepository>();
 
             return services;
 

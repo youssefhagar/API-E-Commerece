@@ -1,5 +1,6 @@
 ﻿using E_Commerece.Application.Contracts;
 using E_Commerece.Application.Service;
+using E_Commerece.Domain.Contract;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace E_Commerece.Application
         {
             services.AddAutoMapper(X=> { },typeof(ApplicationServiceRegister).Assembly);
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IBasketService, BasketService>();
+            services.AddSingleton<ICachService,CachService>();
+
             return services;
         }
 

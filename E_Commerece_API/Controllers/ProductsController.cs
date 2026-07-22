@@ -1,4 +1,5 @@
-﻿using E_Commerece.Application.Common;
+﻿using E_Commerece.API.Attributes;
+using E_Commerece.Application.Common;
 using E_Commerece.Application.Contracts;
 using E_Commerece.Application.Dtos;
 using E_Commerece.Application.Params;
@@ -21,6 +22,7 @@ namespace E_Commerece.API.Controllers
 
         //GetAllProducts
         [HttpGet]
+        [RedisCached]
         public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery]ProductQueryParams param, CancellationToken ct)
         {
             var products = await _productService.GetAllProductsAsync(param, ct);
