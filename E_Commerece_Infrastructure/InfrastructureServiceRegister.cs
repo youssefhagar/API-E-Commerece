@@ -1,7 +1,10 @@
 ﻿using E_Commerce_Infrastructure.DataSeeding;
 using E_Commerece.Domain.Contract;
+using E_Commerece.Domain.Entites.Identity;
 using E_Commerece.Infrastructure.Data;
+using E_Commerece.Infrastructure.DataSeeding;
 using E_Commerece.Infrastructure.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +32,7 @@ namespace E_Commerece.Infrastructure
             });
 
             services.AddKeyedScoped<IDataSeeder, CatalogDataSeeder>("Catalog");
+            services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddSingleton<IConnectionMultiplexer>(options =>
@@ -36,6 +40,9 @@ namespace E_Commerece.Infrastructure
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));
             });
             services.AddSingleton<ICachRepository, CachRepository>();
+            services.AddIdentityCore<ApplicationUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<StoreIdentityDbContext>();
 
             return services;
 

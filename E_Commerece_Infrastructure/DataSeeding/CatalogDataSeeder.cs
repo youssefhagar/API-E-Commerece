@@ -100,6 +100,7 @@ namespace E_Commerce_Infrastructure.DataSeeding
                 typeof(TEntity).Name
             );
         }
+
     }
 }
 
