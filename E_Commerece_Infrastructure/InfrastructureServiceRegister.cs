@@ -35,14 +35,26 @@ namespace E_Commerece.Infrastructure
             services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBasketRepository, BasketRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddSingleton<IConnectionMultiplexer>(options =>
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));
             });
             services.AddSingleton<ICachRepository, CachRepository>();
-            services.AddIdentityCore<ApplicationUser>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<StoreIdentityDbContext>();
+            services.AddIdentityCore<ApplicationUser>(options =>
+            {
+                // يمكنك تعديل شروط كلمة المرور هنا إن أردت
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+            })
+.AddRoles<IdentityRole>()
+.AddRoleManager<RoleManager<IdentityRole>>()
+//.AddSignInManager()                           
+.AddEntityFrameworkStores<StoreIdentityDbContext>();
 
             return services;
 

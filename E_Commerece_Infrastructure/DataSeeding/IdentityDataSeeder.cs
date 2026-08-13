@@ -73,7 +73,11 @@ namespace E_Commerece.Infrastructure.DataSeeding
                     if (res.Succeeded)
                         await _userManager.AddToRoleAsync(admin, "Admin");
                     else
-                        logger.LogError("Can't seed admin user");
+                    {
+                        var errors = string.Join(", ", res.Errors.Select(e => e.Description));
+                        logger.LogError("Can't seed admin user. Errors: {Errors}", errors);
+                    }
+                    ;
                 }
 
                 

@@ -14,7 +14,7 @@ namespace E_Commerece.API
             await seeder.SeedDataAsync();
 
             var seeder2 = scope.ServiceProvider.GetRequiredKeyedService<IDataSeeder>("Identity");
-            await seeder.SeedDataAsync();
+            await seeder2.SeedDataAsync();
 
             return app;
         }
