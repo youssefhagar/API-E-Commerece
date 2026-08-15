@@ -11,9 +11,9 @@ namespace E_Commerece.Application.Contracts
     public interface IAuthService
     {
         public Task<Result<UserDTo>> Login(LoginDto loginDto);
-        Task<Result<UserDTo>> FindUserByEmail(string email);
-        Task<Result<bool>> CheckUserPassword(string Password, string email);
-        Task<Result<bool>> EmailExist(string email);
+        //Task<Result<UserDTo>> FindUserByEmail(string email);
+        //Task<Result<bool>> CheckUserPassword(string Password, string email);
+        //Task<Result<bool>> EmailExist(string email);
 
         public Task<Result<UserDTo>> Register(RegisterDto RegisterDto);
 

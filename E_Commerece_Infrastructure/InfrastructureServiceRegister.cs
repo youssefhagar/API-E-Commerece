@@ -1,9 +1,11 @@
 ﻿using E_Commerce_Infrastructure.DataSeeding;
+using E_Commerece.Application.Contracts;
 using E_Commerece.Domain.Contract;
 using E_Commerece.Domain.Entites.Identity;
 using E_Commerece.Infrastructure.Data;
 using E_Commerece.Infrastructure.DataSeeding;
 using E_Commerece.Infrastructure.Repository;
+using E_Commerece.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +37,8 @@ namespace E_Commerece.Infrastructure
             services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IUserStore, UserStore>();
+            services.AddSingleton<IAcessTokenGenerator, JWTAccessTokenGenerator>();
             //services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddSingleton<IConnectionMultiplexer>(options =>

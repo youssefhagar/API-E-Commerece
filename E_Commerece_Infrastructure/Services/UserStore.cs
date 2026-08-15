@@ -1,0 +1,69 @@
+﻿using E_Commerece.Application.Common;
+using E_Commerece.Application.Dtos.AuthDtos;
+using E_Commerece.Domain.Contract;
+using E_Commerece.Domain.Entites.Identity;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace E_Commerece.Infrastructure.Repository
+{
+    internal class UserStore(UserManager<ApplicationUser> userManager)
+        : IUserStore
+    {
+        public async Task<bool> CheckEmailExist(string email)
+        {
+            throw new NotImplementedException();
+
+        }
+
+        public async Task<bool> CheckUserPasswordAsync(string password, string email)
+        {
+            
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null) return false;
+            
+
+            return
+                await userManager.CheckPasswordAsync(user, password) ? true : false;
+        }
+
+        public async Task<UserDTo> CreateUserAsync(ApplicationUser user,string password)
+        {
+            var result = await userManager.CreateAsync(user,password);
+            if(result.Succeeded)
+            {
+                var mappedUser = new UserDTo()
+                {
+                    DisplayName = user.DisplayName,
+                    Id = user.Id,
+                    Eamil = user.Email!,
+                    UserName = user.UserName!
+                };
+                return mappedUser;
+            }
+            return null;
+        }
+
+        public async Task<UserDTo> FindUserbyEmailAsync(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null) return null!;
+
+            var mappedUser = new UserDTo()
+            {
+                DisplayName = user.DisplayName,
+                Id = user.Id,
+                Eamil = user.Email!,
+                UserName = user.UserName!
+            };
+
+            return  mappedUser;
+        }
+    }
+}
