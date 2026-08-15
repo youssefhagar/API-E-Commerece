@@ -65,5 +65,14 @@ namespace E_Commerece.Infrastructure.Repository
 
             return  mappedUser;
         }
+
+        public async Task<List<string>> GetRoles(string email)
+        {
+            var user  = await userManager.FindByEmailAsync(email);
+            if (user == null)
+                return null!;
+            var roles = await userManager.GetRolesAsync(user);
+            return roles.ToList();
+        }
     }
 }

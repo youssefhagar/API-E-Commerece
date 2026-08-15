@@ -4,12 +4,13 @@ using E_Commerece.Application.Contracts;
 using E_Commerece.Application.Dtos;
 using E_Commerece.Application.Params;
 using E_Commerece.Infrastructure.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerece.API.Controllers
 {
-
+    [Authorize(Roles = "SuperAdmin")]
     public class ProductsController : ApiBaseController
     {
         private readonly IProductService _productService;

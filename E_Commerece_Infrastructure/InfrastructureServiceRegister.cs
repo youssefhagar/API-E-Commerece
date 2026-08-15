@@ -11,11 +11,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.IdentityModel.Tokens;
 
 namespace E_Commerece.Infrastructure
 {
@@ -23,6 +26,8 @@ namespace E_Commerece.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
+
+            AddJwtAuthentication(services, configuration);
             services.AddDbContext<StoreDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
@@ -33,12 +38,14 @@ namespace E_Commerece.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
             });
 
+            
+
             services.AddKeyedScoped<IDataSeeder, CatalogDataSeeder>("Catalog");
             services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IUserStore, UserStore>();
-            services.AddSingleton<IAcessTokenGenerator, JWTAccessTokenGenerator>();
+            
             //services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddSingleton<IConnectionMultiplexer>(options =>
@@ -63,5 +70,47 @@ namespace E_Commerece.Infrastructure
             return services;
 
         }
+
+
+        private static void AddJwtAuthentication(IServiceCollection services, IConfiguration configuration)
+        {
+            var JwtSection = configuration.GetSection(JwtSetting.SectionNamne);
+            var jWtSetting = JwtSection.Get<JwtSetting>();// To Create Object
+            services.Configure<JwtSetting>(JwtSection);
+            services.AddSingleton<IAcessTokenGenerator, JWTAccessTokenGenerator>();
+
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jWtSetting.Issuer,
+
+                        ValidateAudience = true,
+                        ValidAudience = jWtSetting.Audience,
+
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jWtSetting.Secert)),
+
+                        RequireAudience = true,
+                        RequireExpirationTime = true,
+                        ValidateLifetime = true,
+
+                        ClockSkew = TimeSpan.Zero,
+
+                    };
+                });
+
+
+        }
+
+
+
+
     }
 }

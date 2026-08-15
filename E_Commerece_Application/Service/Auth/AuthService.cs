@@ -66,13 +66,17 @@ namespace E_Commerece.Application.Service.Auth
             if (!IsValidPassword)
                 return Result<UserDTo>.Fail(Error.NotFound("User NotFound", "Please Try again"));
 
+            var roles = await userStore.GetRoles(user.Eamil);
+            if(roles == null)
+                Result<UserDTo>.Fail(Error.NotFound("User NotFound", "Please Try again"));
+
             var mappedUser = new UserDTo()
             {
                 DisplayName = user.DisplayName,
                 Id = user.Id,
                 Eamil = user.Eamil,
                 UserName = user.UserName!,
-                Token = tokenService.GenerateToken(user, new List<string>())
+                Token = tokenService.GenerateToken(user, roles!)
             };
 
             return Result<UserDTo>.Ok(mappedUser);

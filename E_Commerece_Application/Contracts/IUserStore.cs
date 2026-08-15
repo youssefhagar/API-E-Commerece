@@ -15,6 +15,7 @@ namespace E_Commerece.Domain.Contract
         Task<UserDTo> FindUserbyEmailAsync(string email);
 
         Task<UserDTo> CreateUserAsync(ApplicationUser user, string password);
+        Task<List<String>> GetRoles(string email);
 
         Task<bool> CheckUserPasswordAsync(string password, string email);
         Task<bool> CheckEmailExist(string  email);

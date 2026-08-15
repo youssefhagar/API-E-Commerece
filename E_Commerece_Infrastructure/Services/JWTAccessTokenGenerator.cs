@@ -1,5 +1,6 @@
 ﻿using E_Commerece.Application.Contracts;
 using E_Commerece.Application.Dtos.AuthDtos;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,10 +8,12 @@ using System.Text;
 
 namespace E_Commerece.Infrastructure.Services
 {
-    public class JWTAccessTokenGenerator : IAcessTokenGenerator
+    public class JWTAccessTokenGenerator(IOptions<JwtSetting> options)
+        : IAcessTokenGenerator
     {
 
         private readonly JwtSecurityTokenHandler _handler = new();
+        private readonly JwtSetting _jwtSetting = options.Value;
         public string GenerateToken(UserDTo userInfo, IEnumerable<string> Roles)
         {
             //Validation
@@ -30,13 +33,13 @@ namespace E_Commerece.Infrastructure.Services
             claims.AddRange(Roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             //Token
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Your_Secert_Key_HerreYour_Secert_Key_Herre"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSetting.Secert));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: "Your_issuer_Herre",
-                audience: "Your_audience_Herre",
-                expires:DateTime.UtcNow.AddMinutes(30),
+                issuer: _jwtSetting.Issuer,
+                audience: _jwtSetting.Audience,
+                expires:DateTime.UtcNow.AddMinutes(_jwtSetting.ExpireMinutes),
                 claims: claims,
                 signingCredentials: credentials
                 );

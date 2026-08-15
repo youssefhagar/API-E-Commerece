@@ -1,12 +1,13 @@
 ﻿using Azure;
 using E_Commerece.Application.Contracts;
 using E_Commerece.Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerece.API.Controllers
 {
-
+    [Authorize(Roles ="Admin")]
     public class BasketsController : ApiBaseController
     {
         private readonly IBasketService basketService;
