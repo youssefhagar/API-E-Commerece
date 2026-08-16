@@ -24,6 +24,7 @@ namespace E_Commerece.Application.Service.Auth
             => await userStore.CheckEmailExist(email) ?
             Result<bool>.Ok(true) : Result<bool>.Fail(Error.Validation(email));
 
+       
 
         public async Task<Result<UserDTo>> Login(LoginDto loginDto)
         {
@@ -82,9 +83,21 @@ namespace E_Commerece.Application.Service.Auth
             return Result<UserDTo>.Ok(userDto);
         }
 
-
+        public async Task<Result<AddressDto>> UpsertAddress(string email,AddressDto address)
+        {
+            var result = await userStore.UpsertAddress(email, address);
+            if(result == null)
+                return Result<AddressDto>.Fail(Error.Failure("Update.Failure","Please try Again "));
+            return Result<AddressDto>.Ok(address);
+        } 
         
+        public async Task<Result<AddressDto>> GetAddress(string email)
+        {
+            var address = await userStore.GetAddressAsync(email);
 
-
+            if (address == null)
+                return Result<AddressDto>.Fail(Error.NotFound("Address.NotFound","Not Falid Eamil User"));
+            return Result<AddressDto>.Ok(address);
+        }
     }
 }

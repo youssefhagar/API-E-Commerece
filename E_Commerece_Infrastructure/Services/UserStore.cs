@@ -1,8 +1,10 @@
 ﻿using E_Commerece.Application.Common;
+using E_Commerece.Application.Dtos;
 using E_Commerece.Application.Dtos.AuthDtos;
 using E_Commerece.Domain.Contract;
 using E_Commerece.Domain.Entites.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +65,8 @@ namespace E_Commerece.Infrastructure.Repository
             return  mappedUser;
         }
 
+        
+
         public async Task<List<string>> GetRoles(string email)
         {
             var user  = await userManager.FindByEmailAsync(email);
@@ -70,6 +74,61 @@ namespace E_Commerece.Infrastructure.Repository
                 return null!;
             var roles = await userManager.GetRolesAsync(user);
             return roles.ToList();
+        }
+
+        public async Task<AddressDto> GetAddressAsync(string email)
+        {
+            var user = 
+                await userManager.Users
+                .Include(X => X.Address)
+                .FirstOrDefaultAsync(U => U.Email == email);
+
+            if (user == null)return null!;
+            if (user.Address == null) return null!;
+            var address = new AddressDto
+            {
+                City = user.Address.City,
+                Street = user.Address.Street,
+                Country = user.Address.Country,
+                FirstName = "Tset",
+                LastName = "Tset"
+                
+            };
+            return address;
+
+        }
+        public async Task<AddressDto> UpsertAddress(string email, AddressDto address)
+        {
+            var user =
+                await userManager.Users
+                .Include(X => X.Address)
+                .FirstOrDefaultAsync(U => U.Email == email);
+
+            if (user == null) return null!;
+
+            if(user.Address == null)
+            {
+                //Insert
+                user.Address = new Address
+                {
+                    Street = address.Street,
+                    Country = address.Country,
+                    City = address.City,
+
+                };
+            }
+            else
+            {
+                //Update
+                user.Address.Street = address.Street;
+                user.Address.Country = address.Country;
+                user.Address.City = address.City;
+            }
+
+            var result = await userManager.UpdateAsync(user);
+
+            return result.Succeeded ? address : null;
+
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerece.Infrastructure.Migrations
 {
     [DbContext(typeof(StoreIdentityDbContext))]
-    [Migration("20260722182719_IdentityModule")]
-    partial class IdentityModule
+    [Migration("20260816143057_IdentityModuleV2")]
+    partial class IdentityModuleV2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,14 +38,6 @@ namespace E_Commerece.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

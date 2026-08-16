@@ -1,4 +1,5 @@
 ﻿using E_Commerece.Application.Common;
+using E_Commerece.Application.Dtos;
 using E_Commerece.Application.Dtos.AuthDtos;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace E_Commerece.Application.Contracts
 
         public Task<Result<UserDTo>> Register(RegisterDto RegisterDto);
 
-
+        Task<Result<AddressDto>> GetAddress(string email);
+        Task<Result<AddressDto>> UpsertAddress(string email,AddressDto address);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,9 @@ namespace E_Commerece.Domain.Entites.Identity
         public string Street { get; set; } = default!;
         public string City { get; set; } = default!;
         public string Country { get; set; } = default!;
-        public string FirstName { get; set; } = default!;
-        public string LastName { get; set; } = default!;
+        [AllowNull]
+        
+
 
 
         public ApplicationUser User { get; set; } = default!;

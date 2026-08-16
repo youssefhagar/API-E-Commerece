@@ -1,4 +1,5 @@
-﻿using E_Commerece.Application.Dtos.AuthDtos;
+﻿using E_Commerece.Application.Dtos;
+using E_Commerece.Application.Dtos.AuthDtos;
 using E_Commerece.Domain.Entites.Identity;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -19,5 +20,10 @@ namespace E_Commerece.Domain.Contract
 
         Task<bool> CheckUserPasswordAsync(string password, string email);
         Task<bool> CheckEmailExist(string  email);
+
+
+        Task<AddressDto> GetAddressAsync(string email);
+        Task<AddressDto> UpsertAddress(string email, AddressDto address);
+
     }
 }
