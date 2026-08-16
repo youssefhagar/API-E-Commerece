@@ -21,6 +21,9 @@ namespace E_Commerece.API.Controllers
         public async Task<ActionResult<UserDTo>> Register(RegisterDto registerDto)
             => ToActionResult( await authService.Register(registerDto));
 
+        [HttpGet("EmailExist")]
+        public async Task<ActionResult<bool>> Register([FromQuery]string email)
+            => ToActionResult(await authService.EmailExist(email));
 
         /*
 

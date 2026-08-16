@@ -20,41 +20,10 @@ namespace E_Commerece.Application.Service.Auth
         IAcessTokenGenerator tokenService) 
         : IAuthService
     {
-        //public async Task<Result<bool>> CheckUserPassword(string Password , string email)
-        //{
-        //    var user = await userManager.FindByEmailAsync(email);
+        public async Task<Result<bool>> EmailExist(string email)
+            => await userStore.CheckEmailExist(email) ?
+            Result<bool>.Ok(true) : Result<bool>.Fail(Error.Validation(email));
 
-        //    if (user == null)
-        //        return Result<bool>.Fail(Error.Failure("Failure", "Check Your Password or Email And try Again"));
-
-        //    return await userManager.CheckPasswordAsync(user,Password) ?
-        //        Result<bool>.Ok(true) 
-        //        : Result<bool>.Fail(Error.Failure("Failure", "Check Your Password or Email And try Again"));
-
-        //}
-
-
-        //public async Task<Result<UserDTo>> FindUserByEmail(string email)
-        //{
-            
-        //    var user = await userManager.FindByEmailAsync(email);
-
-        //    if (user == null)
-        //        return Result<UserDTo>.Fail(Error.Failure("Failure", "Check Your Password or Email And try Again"));
-
-        //    var mappedUser = new UserDTo()
-        //    {
-        //        DisplayName = user.DisplayName,
-        //        Id = user.Id,
-        //        Eamil = user.Email!,
-        //        UserName = user.UserName!,
-        //        Token = tokenService.GenerateToken(, new List<string>())
-        //    };
-
-        //    return 
-        //        Result<UserDTo>.Ok(mappedUser);
-
-        //}
 
         public async Task<Result<UserDTo>> Login(LoginDto loginDto)
         {
@@ -112,5 +81,10 @@ namespace E_Commerece.Application.Service.Auth
 
             return Result<UserDTo>.Ok(userDto);
         }
+
+
+        
+
+
     }
 }

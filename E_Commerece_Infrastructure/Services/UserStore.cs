@@ -15,10 +15,7 @@ namespace E_Commerece.Infrastructure.Repository
         : IUserStore
     {
         public async Task<bool> CheckEmailExist(string email)
-        {
-            throw new NotImplementedException();
-
-        }
+            => await userManager.FindByEmailAsync(email) is not null ;
 
         public async Task<bool> CheckUserPasswordAsync(string password, string email)
         {
