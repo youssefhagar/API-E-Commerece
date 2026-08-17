@@ -1,4 +1,5 @@
-﻿using E_Commerece.Domain.Entites.Products;
+﻿using E_Commerece.Domain.Entites.Orders;
+using E_Commerece.Domain.Entites.Products;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace E_Commerece.Infrastructure.Data
         public DbSet<Product> Products { get; set; } 
         public DbSet<ProductType> ProductBrands { get; set; }
         public DbSet<ProductBrand> ProductTypes { get; set; } 
+        public DbSet<Order> Orders { get; set; } 
+        public DbSet<OrderItem> OrderItems { get; set; } 
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; } 
 
 
 
