@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerece.API.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize]
     public class BasketsController : ApiBaseController
     {
         private readonly IBasketService basketService;

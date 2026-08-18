@@ -10,12 +10,12 @@ namespace E_Commerece.Domain.Entites.Orders
     public class Order : BaseEntity<Guid>
     {
 
-        public DateTime OrderDate { get;set; }
+        public DateTime OrderDate { get;set; } = DateTime.Now;
         public string Email { get; set; } = default!;
         public OrderAddress Address { get; set; } = default!; // Owned Entity Not REaltion
         public decimal SubTotal { get; set; }
         public ICollection<OrderItem> Items { get; set; } = [];
-        public OrderPaymentStatus PaymentStatu { get; set; }
+        public OrderPaymentStatus PaymentStatu { get; set; } = OrderPaymentStatus.Pending;
 
         public DeliveryMethod DeliveryMethod { get; set; } = default!;
         public int DeliveryMethodId { get; set; }

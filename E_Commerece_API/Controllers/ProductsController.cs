@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerece.API.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+
     public class ProductsController : ApiBaseController
     {
         private readonly IProductService _productService;

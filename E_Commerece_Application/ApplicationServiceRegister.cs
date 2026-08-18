@@ -20,6 +20,7 @@ namespace E_Commerece.Application
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddSingleton<ICachService,CachService>();
 
             return services;
