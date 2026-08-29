@@ -1,6 +1,7 @@
 ﻿using E_Commerece.Application.Common;
 using E_Commerece.Application.Dtos;
 using E_Commerece.Domain.Entites.Baskets;
+using E_Commerece.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

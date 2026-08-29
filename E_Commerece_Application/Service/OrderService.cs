@@ -6,6 +6,7 @@ using E_Commerece.Application.Specifications;
 using E_Commerece.Domain.Contract;
 using E_Commerece.Domain.Entites.Orders;
 using E_Commerece.Domain.Entites.Products;
+using E_Commerece.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,7 +77,7 @@ namespace E_Commerece.Application.Service
                 Email = email, // TODO : Check if User Email Exist in DB
                 SubTotal = suptotal,
                 Address = address,
-                PaymentIntentId = "Test"
+                //PaymentIntentId = "Test"
             };
 
             unitOfWork.GetRepository<Order,Guid>().Add(order);

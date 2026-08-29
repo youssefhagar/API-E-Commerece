@@ -21,7 +21,14 @@ namespace E_Commerece.Application
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IPaymentService, StripePaymentService>();
             services.AddSingleton<ICachService,CachService>();
+
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(
+                    typeof(ApplicationServiceRegister).Assembly);
+            });
 
             return services;
         }

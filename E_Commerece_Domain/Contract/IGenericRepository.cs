@@ -18,6 +18,7 @@ namespace E_Commerece.Domain.Contract
         Task<int> GetProductsCountAsync(ISpecification<TEntity, TKey> spec, CancellationToken ct);
         Task<TEntity?> GetByIdASync(int id,CancellationToken ct);
         Task<TEntity?> GetByIdASync(ISpecification<TEntity, TKey> spec, CancellationToken ct);
+        Task<TEntity?> FirstOrDefaultAsync(ISpecification<TEntity, TKey> specification, CancellationToken ct = default);
 
 
     }

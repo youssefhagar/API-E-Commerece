@@ -1,6 +1,7 @@
 ﻿using E_Commerece.Application.Common;
 using E_Commerece.Application.Dtos;
 using E_Commerece.Application.Params;
+using E_Commerece.Domain.Shared;
 using E_Commerece.Infrastructure.Dtos;
 using System;
 using System.Collections.Generic;

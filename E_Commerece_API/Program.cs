@@ -1,6 +1,8 @@
 using E_Commerece.API;
+using E_Commerece.API.Features.Orders.Payment;
 using E_Commerece.Application;
 using E_Commerece.Infrastructure;
+using ECommerce.API.Endpoints;
 using Microsoft.Extensions.FileProviders;
 
 internal class Program
@@ -22,26 +24,35 @@ internal class Program
 
         var app = builder.Build();
         await app.SeedDataAsync();
+        app.UseHttpsRedirection();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
+        //if (app.Environment.IsDevelopment())
+        //{
             app.UseSwagger();
             app.UseSwaggerUI();
-        }
+        //}
+        app.UseHttpsRedirection();
+        var filesPath = Path.Combine(builder.Environment.ContentRootPath, "Files");
+
+        Directory.CreateDirectory(filesPath);
 
         app.UseStaticFiles(new StaticFileOptions
         {
-            FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Files")),
+            FileProvider = new PhysicalFileProvider(filesPath),
             RequestPath = "/Files"
         });
 
-        app.UseHttpsRedirection();
+        
 
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
+
+        // Minimal API Endpoints
+        app.MapPaymentEndpoints();
+        app.MapCreateOrderPaymentEndpoint();
 
         app.Run();
     }

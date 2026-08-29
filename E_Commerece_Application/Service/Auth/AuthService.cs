@@ -4,6 +4,7 @@ using E_Commerece.Application.Dtos;
 using E_Commerece.Application.Dtos.AuthDtos;
 using E_Commerece.Domain.Contract;
 using E_Commerece.Domain.Entites.Identity;
+using E_Commerece.Domain.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 namespace E_Commerece.Application.Service.Auth
 {
     public class AuthService(
-        UserManager<ApplicationUser> userManager,
+        //UserManager<ApplicationUser> userManager,
         IUserStore userStore,
         IAcessTokenGenerator tokenService) 
         : IAuthService

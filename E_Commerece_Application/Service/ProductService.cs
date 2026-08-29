@@ -6,6 +6,7 @@ using E_Commerece.Application.Params;
 using E_Commerece.Application.Specifications;
 using E_Commerece.Domain.Contract;
 using E_Commerece.Domain.Entites.Products;
+using E_Commerece.Domain.Shared;
 using E_Commerece.Infrastructure.Dtos;
 using System;
 using System.Collections.Generic;

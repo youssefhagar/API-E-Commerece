@@ -38,8 +38,10 @@ namespace E_Commerece.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
             });
 
-            
 
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddKeyedScoped<IDataSeeder, CatalogDataSeeder>("Catalog");
             services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
             services.AddScoped<IUnitOfWork, UnitOfWork>();

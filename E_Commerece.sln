@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.37314.3 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12112.369 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E_Commerece.API", "E_Commerece_API\E_Commerece.API.csproj", "{A2A61BC6-174E-4222-992A-4132124D8634}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E_Commerece.Domain", "E_Commerece_Domain\E_Commerece.Domain.csproj", "{D13E1334-306B-4C83-98CE-411A3EF5BADA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E_Commerece.Infrastructure", "E_Commerece_Infrastructure\E_Commerece.Infrastructure.csproj", "{7566C5EC-6C19-4B53-91CD-18C57A914D8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D77A779C-775B-4453-8C0D-AF0BA22DAF3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A2A61BC6-174E-4222-992A-4132124D8634} = {D77A779C-775B-4453-8C0D-AF0BA22DAF3B}
+		{FD1CAC91-77D5-4DBB-8D8D-0265BFCBBF28} = {D77A779C-775B-4453-8C0D-AF0BA22DAF3B}
+		{D13E1334-306B-4C83-98CE-411A3EF5BADA} = {D77A779C-775B-4453-8C0D-AF0BA22DAF3B}
+		{7566C5EC-6C19-4B53-91CD-18C57A914D8A} = {D77A779C-775B-4453-8C0D-AF0BA22DAF3B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5779B976-7C5F-4414-BED1-2361B30CA953}

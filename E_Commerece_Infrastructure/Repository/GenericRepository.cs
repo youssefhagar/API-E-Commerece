@@ -48,5 +48,11 @@ namespace E_Commerece.Infrastructure.Repository
             var query = SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), spec);
             return await query.CountAsync(ct);
         }
+
+        public Task<TEntity?> FirstOrDefaultAsync(ISpecification<TEntity, TKey> specification, CancellationToken ct = default)
+        {
+            var query = SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), specification);
+            return query.FirstOrDefaultAsync(ct);
+        }
     }
 }

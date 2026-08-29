@@ -4,6 +4,7 @@ using E_Commerece.Application.Contracts;
 using E_Commerece.Application.Dtos;
 using E_Commerece.Domain.Contract;
 using E_Commerece.Domain.Entites.Baskets;
+using E_Commerece.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

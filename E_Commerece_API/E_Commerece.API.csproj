@@ -22,5 +22,20 @@
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.29" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.29" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\Files\Images\Products\CasualSneakers.jpg" />
+    <None Include="wwwroot\Files\Images\Products\ClassicBlackDressPants.jpg" />
+    <None Include="wwwroot\Files\Images\Products\ClassicWhiteTShirt.jpeg" />
+    <None Include="wwwroot\Files\Images\Products\CottonHoodie.jpg" />
+    <None Include="wwwroot\Files\Images\Products\DenimJacket.jpg" />
+    <None Include="wwwroot\Files\Images\Products\FormalBlazer.jpg" />
+    <None Include="wwwroot\Files\Images\Products\KnittedSweater.jpg" />
+    <None Include="wwwroot\Files\Images\Products\MensLeatherJacket.jpg" />
+    <None Include="wwwroot\Files\Images\Products\MensPoloShirt.jpg" />
+    <None Include="wwwroot\Files\Images\Products\SlimFitJeans.jpg" />
+    <None Include="wwwroot\Files\Images\Products\SummerFloralDress.jpg" />
+    <None Include="wwwroot\Files\Images\Products\WomensTrenchCoat.jpeg" />
+    <None Include="wwwroot\Files\Images\Products\WoolScarf.jpg" />
+  </ItemGroup>
 
 </Project>
