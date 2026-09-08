@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace E_Commerece.API.Controllers
 {
     [Authorize]
-    public class OrderController(IOrderService orderService)
+    public class OrdersController(IOrderService orderService)
         : ApiBaseController
     {
 
