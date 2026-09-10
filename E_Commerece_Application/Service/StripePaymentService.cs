@@ -80,7 +80,7 @@ namespace E_Commerece.Application.Service
             Guid orderId,
             CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(_settings.Secretkey))
+            if (string.IsNullOrWhiteSpace(_settings.Secretkey)) 
                 return Result<PaymentIntentResult>.Fail(Error.Failure("Payment.Failuer", "Fail To pay Please Try again"));
 
             if (string.IsNullOrWhiteSpace(paymentIntentId))

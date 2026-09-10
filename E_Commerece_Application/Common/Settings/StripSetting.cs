@@ -8,7 +8,7 @@ namespace E_Commerece.Application.Common.Settings
 {
     public class StripSetting
     {
-        public string SectionName { get; set; } = "Strip";
+        public const string SectionName = "Strip";
         public string Secretkey { get; set; } = string.Empty;
         public string Publishablekey { get; set; } = string.Empty;
         public string WebHookSecretkey { get; set; } = string.Empty;

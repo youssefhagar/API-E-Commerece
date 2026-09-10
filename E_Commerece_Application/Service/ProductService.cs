@@ -39,7 +39,13 @@ namespace E_Commerece.Application.Service
         {
             var spec = new ProductSpecififcation(param);
             var products = await _unitOfWork.GetRepository<Product,int>().GetAllAsync(spec,ct);
+
+            var firstProduct = products.FirstOrDefault();
+            Console.WriteLine($"PRODUCT ID FROM DATABASE: {firstProduct?.Id}");
+
             var mappedProducts = mapper.Map<IReadOnlyList<ProductDto>>(products);
+            var firstDto = mappedProducts.FirstOrDefault();
+            Console.WriteLine($"PRODUCT ID AFTER MAPPING: {firstDto?.Id}");
             var countspec = new ProductCountSpecification(param);
             var totalCount = await _unitOfWork.GetRepository<Product,int>().GetProductsCountAsync(countspec, ct);
             return Result<PaginatedResult<ProductDto>>.Ok(new PaginatedResult<ProductDto>

@@ -23,7 +23,7 @@ namespace E_Commerece.Infrastructure.Repository
 
       
 
-        public async Task<TEntity?> GetByIdASync(int id, CancellationToken ct = default!)
+        public async Task<TEntity?> GetByIdASync(TKey id, CancellationToken ct = default!)
             => await context.Set<TEntity>().FindAsync(id, ct);
 
         public void Update(TEntity entity)

@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>2dfcacd8-2e2c-439e-9b0d-82dc1bb1a740</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,5 +38,12 @@
     <None Include="wwwroot\Files\Images\Products\WomensTrenchCoat.jpeg" />
     <None Include="wwwroot\Files\Images\Products\WoolScarf.jpg" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Files\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

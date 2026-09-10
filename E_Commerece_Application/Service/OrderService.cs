@@ -18,6 +18,7 @@ namespace E_Commerece.Application.Service
     public class OrderService(
         IUnitOfWork unitOfWork,
         IBasketRepository basketRepository,
+        ICurrentUserService currentUserService,
         IMapper mapper) 
         : IOrderService
     {
@@ -70,15 +71,24 @@ namespace E_Commerece.Application.Service
             var address = mapper.Map<OrderAddress>(orderToCreate.Address);// Miss Mapping 
             var suptotal = orderItems.Sum(p=>p.Price*p.Quantity);
 
-            var order = new Order
+            if (currentUserService.UserId is null)
             {
+                return Result<OrderToReturnDto>
+                    .Fail(Error.Unauthorized());
+            }
+
+            var order = new Order(currentUserService.UserId.Value)
+            {
+                //UserId = currentUserService.UserId,
                 DeliveryMethod = delivaryMethod,
                 Items = orderItems,
                 Email = email, // TODO : Check if User Email Exist in DB
                 SubTotal = suptotal,
                 Address = address,
+                //Status = OrderStatus.Pending,
                 //PaymentIntentId = "Test"
             };
+            
 
             unitOfWork.GetRepository<Order,Guid>().Add(order);
 

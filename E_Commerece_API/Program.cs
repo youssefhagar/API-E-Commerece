@@ -10,12 +10,31 @@ internal class Program
     private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        Console.WriteLine("Environment: " + builder.Environment.EnvironmentName);
 
-        // Add services to the container.
+        Console.WriteLine(
+            "Secret: " + builder.Configuration["Strip:Secretkey"]);
+
+        Console.WriteLine(
+            "Publishable: " + builder.Configuration["Strip:Publishablekey"]);
+
+        Console.WriteLine(
+            "Currency: " + builder.Configuration["Strip:Currency"]);
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("Frontend", policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:5173")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
 
         builder.Services.AddControllers();
         builder.Services.AddInfrastructureServices(builder.Configuration);
-        builder.Services.AddApplicationServices();
+        builder.Services.AddApplicationServices(builder.Configuration);
         builder.Services.Configure<UrlSettings>(builder.Configuration.GetSection("UrlSettings"));
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -23,6 +42,8 @@ internal class Program
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
+        app.UseCors("Frontend");
+
         await app.SeedDataAsync();
         app.UseHttpsRedirection();
 
@@ -37,13 +58,13 @@ internal class Program
 
         Directory.CreateDirectory(filesPath);
 
-        app.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(filesPath),
-            RequestPath = "/Files"
-        });
+        //app.UseStaticFiles(new StaticFileOptions
+        //{
+        //    FileProvider = new PhysicalFileProvider(filesPath),
+        //    RequestPath = "/Files"
+        //});
+        app.UseStaticFiles();
 
-        
 
         app.UseAuthentication();
         app.UseAuthorization();

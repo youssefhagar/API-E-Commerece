@@ -18,15 +18,19 @@ namespace E_Commerece.Infrastructure.Services
         {
             get
             {
-                var value = httpContextAccessor.HttpContext?.User
+                var value = httpContextAccessor.HttpContext?
+                    .User
                     .FindFirstValue(ClaimTypes.NameIdentifier);
 
-                return Guid.TryParse(value, out var id) ? id : null;
+                return Guid.TryParse(value, out var id)
+                    ? id
+                    : null;
             }
         }
 
         public string? Email =>
-            httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Email)
-            ?? httpContextAccessor.HttpContext?.User.FindFirstValue("email");
+            httpContextAccessor.HttpContext?
+                .User
+                .FindFirstValue(ClaimTypes.Email);
     }
 }

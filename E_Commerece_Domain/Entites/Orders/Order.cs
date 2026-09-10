@@ -28,7 +28,15 @@ namespace E_Commerece.Domain.Entites.Orders
         public string? PaymentIntentId { get; private set; } = default!;
         public DateTimeOffset? PaidAtUtc { get; private set; }
 
+        private Order()
+        {
+        }
 
+        public Order(Guid userId)
+        {
+            UserId = userId;
+            Status = OrderStatus.Pending;
+        }
 
         public Result AttachPaymentIntent(string paymentIntentId)
         {
@@ -42,14 +50,13 @@ namespace E_Commerece.Domain.Entites.Orders
             //UpdatedAt = DateTimeOffset.UtcNow;
             return Result.Success();
         }
-
         public Result MarkAsPaid(string paymentIntentId)
         {
             if (Status == OrderStatus.Cancelled)
                 return Result.Fail(OrderErrors.CannotPayCancelled);
 
-            // Idempotent: already paid with same intent
-            if (Status == OrderStatus.Processing
+            // Idempotent: already paid
+            if (PaymentStatu == OrderPaymentStatus.Success
                 && PaymentIntentId == paymentIntentId
                 && PaidAtUtc is not null)
                 return Result.Success();
@@ -63,10 +70,40 @@ namespace E_Commerece.Domain.Entites.Orders
 
             PaymentIntentId = paymentIntentId;
             PaidAtUtc = DateTimeOffset.UtcNow;
+
+            // Payment succeeded
+            PaymentStatu = OrderPaymentStatus.Success;
+
+            // Order can now be processed
             Status = OrderStatus.Processing;
-            //UpdatedAt = DateTimeOffset.UtcNow;
+
             return Result.Success();
         }
+
+        //public Result MarkAsPaid(string paymentIntentId)
+        //{
+        //    if (Status == OrderStatus.Cancelled)
+        //        return Result.Fail(OrderErrors.CannotPayCancelled);
+
+        //    // Idempotent: already paid with same intent
+        //    if (Status == OrderStatus.Processing
+        //        && PaymentIntentId == paymentIntentId
+        //        && PaidAtUtc is not null)
+        //        return Result.Success();
+
+        //    if (Status != OrderStatus.Pending)
+        //        return Result.Fail(OrderErrors.InvalidPaymentState);
+
+        //    if (!string.IsNullOrWhiteSpace(PaymentIntentId)
+        //        && PaymentIntentId != paymentIntentId)
+        //        return Result.Fail(OrderErrors.PaymentIntentMismatch);
+
+        //    PaymentIntentId = paymentIntentId;
+        //    PaidAtUtc = DateTimeOffset.UtcNow;
+        //    Status = OrderStatus.Processing;
+        //    //UpdatedAt = DateTimeOffset.UtcNow;
+        //    return Result.Success();
+        //}
 
     }
 
